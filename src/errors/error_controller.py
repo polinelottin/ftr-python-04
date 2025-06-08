@@ -10,7 +10,7 @@ def handle_error(error: Exception) -> Dict:
                 "errors": [
                     {
                         "title": error.name,
-                        "detail": error.message
+                        "detail": error.value
                     }
                 ]
             }
@@ -25,5 +25,5 @@ def handle_error(error: Exception) -> Dict:
                     "detail": str(error)
                 }
             ]
-        }
+        },
     }
