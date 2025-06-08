@@ -1,21 +1,7 @@
-from typing import Dict, List
 from pytest import raises
 from src.calculators.calculator_2 import Calculator2
-from src.drivers.interfaces.driver_handler_interface import DriverHandlerInterface
-
-class MockRequest:
-  def __init__(self, body: Dict) -> None:
-    self.json = body
-
-class MockDriverHandler(DriverHandlerInterface):
-  def standard_derivation(self, numbers: List[float]) -> float:
-    return 2.0
-  
-  def variance(self, numbers: List[float]) -> float:
-    return 5.0
-  
-  def average(self, numbers: List[float]) -> float:
-    return 3.0
+from src.mocks.driver_handler_mock import MockDriverHandler
+from src.mocks.request_mock import MockRequest
 
 def test_calculate_integration():
   mock_request = MockRequest(body={"numbers": [1, 2, 3, 4, 5]})

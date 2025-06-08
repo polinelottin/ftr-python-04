@@ -1,10 +1,7 @@
 from typing import Dict
 from pytest import raises
 from src.main.factories.calculator1_factory import calculator1_factory
-
-class MockRequest:
-  def __init__(self, body: Dict) -> None:
-    self.json = body
+from src.mocks.request_mock import MockRequest
 
 def test_calculate():
   mock_request = MockRequest({"number": 10})
