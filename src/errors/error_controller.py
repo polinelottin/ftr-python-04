@@ -1,29 +1,24 @@
-from typing import Dict
+from typing import Dict, Tuple
+from flask import jsonify
 from .http_unprocessable_entity import HttpUnprocessableEntity
 from .http_bad_request import HttpBadRequest
 
-def handle_error(error: Exception) -> Dict:
+def handle_error(error: Exception) -> Tuple[Dict, int]:
     if isinstance(error, (HttpUnprocessableEntity, HttpBadRequest)):
-        return {
-            "status_code": error.status_code,
-            "body": {
-                "errors": [
-                    {
-                        "title": error.name,
-                        "detail": error.value
-                    }
-                ]
-            }
-        }
-
-    return {
-        "status_code": 500,
-        "body": {
+        return jsonify({
             "errors": [
                 {
-                    "title": "Internal Server Error"  ,
-                    "detail": str(error)
+                    "title": error.name,
+                    "detail": error.value
                 }
             ]
-        },
-    }
+        }), error.status_code
+
+    return jsonify({
+        "errors": [
+            {
+                "title": "Internal Server Error",
+                "detail": str(error)
+            }
+        ]
+    }), 500
